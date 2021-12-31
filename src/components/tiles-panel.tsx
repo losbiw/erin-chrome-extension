@@ -30,14 +30,14 @@ const Tiles: FC<Props> = ({
 }: Props) => (
   <Container>
     {
-      entries.map(({ href, title }, index) => (
+      entries.map(({ url, title }, index) => (
         <Tile
-          href={href}
+          url={url}
           title={title}
           removeEntry={removeEntry}
           editEntry={editEntry}
           // eslint-disable-next-line react/no-array-index-key
-          key={`${href}${title}${index}`}
+          key={`${url}${title}${index}`}
           index={index}
         />
       ))

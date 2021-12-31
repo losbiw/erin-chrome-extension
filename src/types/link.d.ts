@@ -1,5 +1,5 @@
 interface Link {
-  href: string;
+  url: string;
   title: string;
 }
 

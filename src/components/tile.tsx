@@ -50,13 +50,13 @@ export const TileTitle = styled.p`
 `;
 
 const Tile: FC<Props> = ({
-  href, title, index, removeEntry, editEntry,
+  url, title, index, removeEntry, editEntry,
 }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <TileContainer href={href}>
-      <Icon src={`chrome://favicon/size/64@1x/${href}`} />
+    <TileContainer href={url}>
+      <Icon src={`chrome://favicon/size/64@1x/${url}`} />
       <TileTitle>{title}</TileTitle>
       <Edit isVisible={isMenuOpen} openMenu={() => setIsMenuOpen(true)} />
 

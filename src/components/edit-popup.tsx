@@ -81,22 +81,24 @@ const CloseButton = styled.button`
 `;
 
 const EditPopup: FC<Props> = ({
-  href: defaultHref, title: defaultTitle, editedIndex, closePopup, addEntry, changeEntry,
+  url: defaultUrl, title: defaultTitle, editedIndex, closePopup, addEntry, changeEntry,
 }: Props) => {
   const [title, setTitle] = useState(defaultTitle);
-  const [href, setHref] = useState(defaultHref);
+  const [url, setUrl] = useState(defaultUrl);
 
   const handleSave = useCallback(() => {
-    if (!href) {
+    if (!url) {
       closePopup();
       return;
     }
 
     // TODO: validate URLs to have https
 
+    const validatedUrl = encodeURIComponent(url);
+
     const entry: Link = {
-      title: title || href,
-      href,
+      title: title || url,
+      url,
     };
 
     if (editedIndex !== undefined) {
@@ -106,7 +108,7 @@ const EditPopup: FC<Props> = ({
     }
 
     closePopup();
-  }, [title, href]);
+  }, [title, url]);
 
   useEffect(() => {
     const hotkeyHandle = (e: KeyboardEvent) => {
@@ -142,9 +144,9 @@ const EditPopup: FC<Props> = ({
 
         <Input
           label="URL"
-          defaultValue={defaultHref}
+          defaultValue={defaultUrl}
           placeholder="Website address"
-          onChange={({ target: { value } }) => setHref(value)}
+          onChange={({ target: { value } }) => setUrl(value)}
         />
 
         <PopupButtons handleClose={closePopup} handleSave={handleSave} />
