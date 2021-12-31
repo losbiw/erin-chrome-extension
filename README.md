@@ -20,4 +20,5 @@ So I kinda fell in love with Brave's newtab page as soon as I opened the browser
 Which will only imply your absolute lack of culture and education and make me wanna:
 - spit in your face
 - explain everything to help your barely relevant understanding of this world
+
 So first of all, I have a special style of writing code so I couldn't just copy/paste whatever wheel Brave's engineers have reinvented for the like, 5th time already. I obvisouly know how to do their job better so instead I just decided to create everything from scratch the way that only me and God understand what this entire codebase means. Tomorrow it will be just God, but that's not the point. Last but not the least, this version of the extension has a huge library of wallpapers that are hosted by based [Pexels](https://www.pexels.com/) (unlike the virgin/incel unsplashed library that consists of 5 images brave uses) which genuinely makes it as customizable as it gets without any additional spy- and bloatware.
