@@ -80,6 +80,11 @@ const CloseButton = styled.button`
   }
 `;
 
+const validateUrl = (url: string) => {
+  const encoded = encodeURIComponent(url);
+  return /https/.test(encoded) ? encoded : `https://${encoded}`;
+};
+
 const EditPopup: FC<Props> = ({
   url: defaultUrl, title: defaultTitle, editedIndex, closePopup, addEntry, changeEntry,
 }: Props) => {
@@ -92,13 +97,11 @@ const EditPopup: FC<Props> = ({
       return;
     }
 
-    // TODO: validate URLs to have https
-
-    const validatedUrl = encodeURIComponent(url);
+    const validatedUrl = validateUrl(url);
 
     const entry: Link = {
-      title: title || url,
-      url,
+      title: title || validatedUrl,
+      url: validatedUrl,
     };
 
     if (editedIndex !== undefined) {
