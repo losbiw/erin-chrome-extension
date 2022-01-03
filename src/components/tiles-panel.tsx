@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import Tile from './tile';
 import Link from '../types/link';
 import AddTile from './add-tile';
@@ -9,7 +10,16 @@ interface Props {
   openPopup: () => void;
   removeEntry: (index: number) => void;
   editEntry: (index: number) => void;
+  switchEntries: (initIndex: number, endIndex: number) => void;
 }
+
+type ListProps = Props & {
+  isAddButtonShown: boolean;
+};
+
+type ItemProps = Link & Omit<Props, 'entries' | 'openPopup' | 'switchEntries'> & {
+  itemIndex: number;
+};
 
 const Container = styled.div`
   z-index: 1;
@@ -25,26 +35,59 @@ const Container = styled.div`
   }
 `;
 
-const Tiles: FC<Props> = ({
-  entries, openPopup, removeEntry, editEntry,
-}: Props) => (
+const SortableItem = SortableElement(({
+  url, title, removeEntry, editEntry, itemIndex,
+}: ItemProps) => (
+  <Tile
+    url={url}
+    title={title}
+    removeEntry={removeEntry}
+    editEntry={editEntry}
+    index={itemIndex}
+  />
+));
+
+const SortableList = SortableContainer(({
+  entries, removeEntry, editEntry, openPopup, isAddButtonShown,
+}: ListProps) => (
   <Container>
     {
       entries.map(({ url, title }, index) => (
-        <Tile
+        <SortableItem
           url={url}
           title={title}
+          itemIndex={index}
           removeEntry={removeEntry}
           editEntry={editEntry}
+          index={index}
           // eslint-disable-next-line react/no-array-index-key
           key={`${url}${title}${index}`}
-          index={index}
         />
       ))
     }
 
-    <AddTile openPopup={openPopup} />
+    { isAddButtonShown && <AddTile openPopup={openPopup} /> }
   </Container>
-);
+));
+
+const Tiles: FC<Props> = (props: Props) => {
+  const { switchEntries } = props;
+  const [isAddButtonShown, setIsAddButtonShown] = useState(true);
+
+  return (
+    <SortableList
+      {...props}
+      isAddButtonShown={isAddButtonShown}
+      onSortStart={() => setIsAddButtonShown(false)}
+      onSortEnd={({ newIndex, oldIndex }) => {
+        setIsAddButtonShown(true);
+        switchEntries(newIndex, oldIndex);
+      }}
+      axis="xy"
+      distance={2}
+      lockToContainerEdges
+    />
+  );
+};
 
 export default Tiles;

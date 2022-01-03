@@ -41,6 +41,16 @@ const App: FC = () => {
     setLinks(copy);
   }, [links]);
 
+  const switchEntries = useCallback((initialIndex: number, endIndex: number) => {
+    const copy = [...links];
+
+    const replacement = copy[initialIndex];
+    copy[initialIndex] = copy[endIndex];
+    copy[endIndex] = replacement;
+
+    setLinks(copy);
+  }, [links]);
+
   useEffect(() => {
     const json = JSON.stringify(links);
     localStorage.setItem('link-entries', json);
@@ -67,6 +77,7 @@ const App: FC = () => {
           entries={links}
           openPopup={() => setIsPopupOpen(true)}
           removeEntry={removeEntry}
+          switchEntries={switchEntries}
           editEntry={(index: number) => {
             setEditedItemIndex(index);
             setIsPopupOpen(true);
