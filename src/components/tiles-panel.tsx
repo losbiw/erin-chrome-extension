@@ -21,17 +21,25 @@ type ItemProps = Link & Omit<Props, 'entries' | 'openPopup' | 'switchEntries'> &
   itemIndex: number;
 };
 
+const OuterContainer = styled.div`
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-direction: row;
+  height: fit-content;
+  min-width: 0px;
+`;
+
 const Container = styled.div`
   z-index: 1;
   justify-self: start;
   align-items: normal;
   display: grid;
   grid-template-columns: repeat(6, 86px);
-  justify-content: var(--ntp-item-justify,start);
   padding: 24px 56px 24px 24px;
 
-  @media screen and (max-width: 700px)
-    grid-template-columns: repeat(3, 86);
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(3, 86px);
   }
 `;
 
@@ -75,18 +83,21 @@ const Tiles: FC<Props> = (props: Props) => {
   const [isAddButtonShown, setIsAddButtonShown] = useState(true);
 
   return (
-    <SortableList
-      {...props}
-      isAddButtonShown={isAddButtonShown}
-      onSortStart={() => setIsAddButtonShown(false)}
-      onSortEnd={({ newIndex, oldIndex }) => {
-        setIsAddButtonShown(true);
-        switchEntries(newIndex, oldIndex);
-      }}
-      axis="xy"
-      distance={2}
-      lockToContainerEdges
-    />
+    <OuterContainer>
+      <SortableList
+        {...props}
+        isAddButtonShown={isAddButtonShown}
+        onSortStart={() => setIsAddButtonShown(false)}
+        onSortEnd={({ newIndex, oldIndex }) => {
+          setIsAddButtonShown(true);
+          switchEntries(newIndex, oldIndex);
+        }}
+        axis="xy"
+        lockOffset="15%"
+        distance={2}
+        lockToContainerEdges
+      />
+    </OuterContainer>
   );
 };
 

@@ -14,6 +14,13 @@ const Container = styled.div`
   background: url('https://images.pexels.com/photos/1034662/pexels-photo-1034662.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=2000');
   background-size: cover;
   background-position: center;
+  display: flex;
+  align-items: flex-start;
+  justift-content: flex-start;
+
+  @media (max-width: 870px) {
+    justify-content: center;
+  }
 `;
 
 const rawState = localStorage.getItem('link-entries');
