@@ -41,12 +41,12 @@ const App: FC = () => {
     setLinks(copy);
   }, [links]);
 
-  const switchEntries = useCallback((initialIndex: number, endIndex: number) => {
+  const switchEntries = useCallback((newIndex: number, oldIndex: number) => {
     const copy = [...links];
 
-    const replacement = copy[initialIndex];
-    copy[initialIndex] = copy[endIndex];
-    copy[endIndex] = replacement;
+    const dragged = copy[oldIndex];
+    copy.splice(oldIndex, 1);
+    copy.splice(newIndex, 0, dragged);
 
     setLinks(copy);
   }, [links]);
