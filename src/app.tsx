@@ -4,6 +4,7 @@ import React, {
 import styled from 'styled-components';
 import EditPopup from './components/edit-popup';
 import TilesPanel from './components/tiles-panel';
+import { LINK_ENTRIES } from './constants/local-storage-keys';
 import Link from './types/link';
 
 const Container = styled.div`
@@ -23,7 +24,7 @@ const Container = styled.div`
   }
 `;
 
-const rawState = localStorage.getItem('link-entries');
+const rawState = localStorage.getItem(LINK_ENTRIES);
 
 const App: FC = () => {
   const [links, setLinks] = useState(rawState ? JSON.parse(rawState) as Link[] : []);
@@ -60,7 +61,7 @@ const App: FC = () => {
 
   useEffect(() => {
     const json = JSON.stringify(links);
-    localStorage.setItem('link-entries', json);
+    localStorage.setItem(LINK_ENTRIES, json);
   }, [links]);
 
   return (
