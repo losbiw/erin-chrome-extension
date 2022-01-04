@@ -80,10 +80,7 @@ const CloseButton = styled.button`
   }
 `;
 
-const validateUrl = (url: string) => {
-  const encoded = encodeURIComponent(url);
-  return /https/.test(encoded) ? encoded : `https://${encoded}`;
-};
+const validateUrl = (url: string) => (/https/.test(url) ? url : `https://${url}`);
 
 const EditPopup: FC<Props> = ({
   url: defaultUrl, title: defaultTitle, editedIndex, closePopup, addEntry, changeEntry,
