@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "Erin",
+  "version": "0.1.0",
+  "permissions": [
+    "chrome://favicon/*",
+    "tabs"
+  ],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  }
+}
