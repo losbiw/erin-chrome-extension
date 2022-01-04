@@ -2,7 +2,11 @@
 
 const fs = require('fs');
 const path = require('path');
-const paths = require('./paths');
+const paths = {};
+
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+paths.dotenv = resolveApp('.env');
 
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./paths')];
@@ -49,7 +53,6 @@ dotenvFiles.forEach(dotenvFile => {
 // Otherwise, we risk importing Node.js core modules into an app instead of webpack shims.
 // https://github.com/facebook/create-react-app/issues/1023#issuecomment-265344421
 // We also resolve them to make sure all tools using them work consistently.
-const appDirectory = fs.realpathSync(process.cwd());
 process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .split(path.delimiter)
   .filter(folder => folder && !path.isAbsolute(folder))
@@ -88,6 +91,7 @@ function getClientEnvironment(publicUrl) {
         // Whether or not react-refresh is enabled.
         // It is defined here so it is available in the webpackHotDevClient.
         FAST_REFRESH: process.env.FAST_REFRESH !== 'false',
+        PEXELS: process.env.PEXELS,
       }
     );
   // Stringify all values so we can feed into webpack DefinePlugin
@@ -100,5 +104,7 @@ function getClientEnvironment(publicUrl) {
 
   return { raw, stringified };
 }
+
+getClientEnvironment();
 
 module.exports = getClientEnvironment;
