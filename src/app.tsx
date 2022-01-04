@@ -5,14 +5,19 @@ import styled from 'styled-components';
 import EditPopup from './components/edit-popup';
 import TilesPanel from './components/tiles-panel';
 import { LINK_ENTRIES } from './constants/local-storage-keys';
+import wallpaper from './helpers/wallpaper';
 import Link from './types/link';
 
-const Container = styled.div`
+interface ContainerProps {
+  wallpaperURL: string | undefined;
+}
+
+const Container = styled.div<ContainerProps>`
   height: 100vh;
   box-sizing: border-box;
   padding: 12px;
   margin: 0;
-  background: url('https://images.pexels.com/photos/1034662/pexels-photo-1034662.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=2000');
+  ${({ wallpaperURL }) => (wallpaperURL ? `background: url(${wallpaperURL})` : '')};
   background-size: cover;
   background-position: center;
   display: flex;
@@ -30,6 +35,17 @@ const App: FC = () => {
   const [links, setLinks] = useState(rawState ? JSON.parse(rawState) as Link[] : []);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [editedItemIndex, setEditedItemIndex] = useState<number | undefined>(undefined);
+  const [wallpaperURL, setWallpaperURL] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const getWallpaper = async () => {
+      const url = await wallpaper.getURL('new york'); // TODO: remove static query
+
+      setWallpaperURL(url.src);
+    };
+
+    getWallpaper();
+  }, []);
 
   const addEntry = useCallback((entry: Link) => {
     setLinks([...links, entry]);
@@ -80,7 +96,7 @@ const App: FC = () => {
         />
         )}
 
-      <Container>
+      <Container wallpaperURL={wallpaperURL}>
         <TilesPanel
           entries={links}
           openPopup={() => setIsPopupOpen(true)}
