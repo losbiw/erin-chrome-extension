@@ -47,6 +47,7 @@ export const TileTitle = styled.p`
   padding: 0 2px;
   margin: 0;
   font-weight: 400;
+  text-shadow: 0 3px 12px rgba(0,0,0, 0.2);
 `;
 
 const Tile: FC<Props> = ({
