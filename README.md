@@ -1,11 +1,11 @@
 # Erin chrome extension
 
 ## Goal
-The extension resembles Brave browser's newtab page's feel and look in almost every way, for the exception of:
-- Slightly improved UI of certain elements
+The extension resembles Brave browser's newtab page's feel and look in almost every single way, except for:
+- Slightly improved UI
 - Extended wallpapers library
-- Customizable wallpapers choice
-- Lack of bloatware (disappointed brave browser user's face)
+- Customizable wallpapers choice (in-progress)
+- Lack of bloatware (disappointed brave browser's user's face)
 
 ## Technologies
 - React.js
